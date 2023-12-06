@@ -222,6 +222,49 @@ void Board::revealTiles(int row, int col){
     }
 }
 
+bool Board::revealNumTiles(int row, int col){
+
+    int numFlags = 0;
+    bool minesRevealed = false;
+
+    for (int i = row - 1; (i < row + 2) && (i < rows); i++){
+        for(int j = col - 1; (j < col + 2) && (j < columns); j++){
+            //make sure not checking tiles that don't exist
+            if(i < 0){
+                i = 0;
+            }else if (i == rows){
+                i = rows - 1;
+            }
+            if(j < 0){
+                j = 0;
+            }else if(j == columns){
+                j = columns - 1;
+            }
+            //check if enough flags
+            if (board[i][j].flagged){
+                numFlags += 1;
+            }
+        }
+    }
+
+    //only reveal tiles if enough flags
+    if (numFlags == board[row][col].mineNeighbors){
+        for (int i = row - 1; (i < row + 2) && (i < rows); i++){
+            for(int j = col - 1; (j < col + 2) && (j < columns); j++){
+                if (!board[i][j].revealed  && !board[i][j].flagged){
+                    board[i][j].revealed = true;
+                    if (board[i][j].mine){
+                        minesRevealed = true;
+                    }
+
+                }
+            }
+        }
+    }
+    //check if number
+    return minesRevealed;
+}
+
 bool Board::checkWin() {
     for (int i = 0; i < rows; i++){
         for (int j = 0; j < columns; j++){

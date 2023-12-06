@@ -395,7 +395,46 @@ int main() {
                                  faceSprite.setTexture(TextureManager::getTexture("face_lose"));
                              } else if (board.board[clickRow][clickCol].flagged) {
                                  //nothing because flagged needs to be unflagged
-                             } else {
+                             } else if(board.board[clickRow][clickCol].revealed){
+                                 //if number tile, check if enough flags to remove others
+                                 //can lose game if a mine is incorrectly revealed
+                                 gameLost = board.revealNumTiles(clickRow, clickCol);
+                                 gameWon = board.checkWin();
+
+                                 if(gameLost){
+                                     paused = true;
+                                     flags.reset_board();
+                                     mines.reset_board();
+                                     for (int i = 0; i < board.rows; i++) {
+                                         for (int j = 0; j < board.columns; j++) {
+                                             if (board.board[i][j].mine == true) {
+                                                 board.board[i][j].revealed = true;
+                                             }
+
+                                         }
+                                     }
+                                 }else if (gameWon){
+                                     faceSprite.setTexture(TextureManager::getTexture("face_win"));
+                                     paused = true;
+                                     leaderboardVec = savetoLB(board.minutes, board.seconds, displayName,
+                                                               "files/leaderboard.txt", leaderboardVec);
+                                     leaderboardNames.setString(getLBstring(leaderboardVec));
+                                     leaderboardOpen = true;
+                                     debugMode = false;
+                                     //put flags on mines
+                                     for (int i = 0; i < board.rows; i++) {
+                                         for (int j = 0; j < board.columns; j++) {
+                                             if (board.board[i][j].mine == true) {
+                                                 board.board[i][j].revealed = false; // for debug mode
+                                                 flags.board[i][j].flagged = true;
+
+                                             }
+                                             board.numFlags = Mines;
+
+                                         }
+                                     }
+                                 }
+                             }else{
                                  //reveal if not mine
                                  board.board[clickRow][clickCol].revealed = true;
                                  if (board.board[clickRow][clickCol].mineNeighbors == 0) {

@@ -85,6 +85,7 @@ public:
     void drawTimer(sf::RenderWindow& window);
     void findMineNeighbors();
     void revealTiles(int row, int col);
+    bool revealNumTiles(int row, int col);
     bool checkWin();
 
 };
