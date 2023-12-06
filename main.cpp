@@ -391,7 +391,6 @@ int main() {
 
                                      }
                                  }
-
                                  faceSprite.setTexture(TextureManager::getTexture("face_lose"));
                              } else if (board.board[clickRow][clickCol].flagged) {
                                  //nothing because flagged needs to be unflagged
@@ -413,6 +412,7 @@ int main() {
 
                                          }
                                      }
+                                     faceSprite.setTexture(TextureManager::getTexture("face_lose"));
                                  }else if (gameWon){
                                      faceSprite.setTexture(TextureManager::getTexture("face_win"));
                                      paused = true;
