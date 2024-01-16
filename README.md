@@ -1,9 +1,4 @@
-Name: Tyler Audino
-Section: 12118
-UFL email: tyler.audino@ufl.edu
-System: macOS Ventura 13.2.1 (M1 MacBook Pro)
-Compiler: Clang 
-SFML Version: 2.6.1
-IDE: CLion
-
-Final project for Programming Fundamentals 2
+Minesweeper 
+By Tyler Audino
+Final project for Programming Fundamentals 2 Fall 2023 with minor additional features added
+Developed using SFML library and C++
